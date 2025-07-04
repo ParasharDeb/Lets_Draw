@@ -1,12 +1,22 @@
 import  express from "express";
+import jwt from "jsonwebtoken"
+import { JWT_SECRET } from "./config";
+import { middleware } from "./middleware";
 const app=express();
 app.post("/signup",(req,res)=>{
-    res.send("hi there")
+    const username=req.body.username;
+    const password=req.body.password;
+    const email=req.body.email;
+
 })
 app.post("/signin",(req,res)=>{
-    res.send("hi there")
+    const username=req.body.username;
+    const password=req.body.password;
+    const token =jwt.sign({
+        username
+    },JWT_SECRET)
 })
-app.get("/clusters",(req,res)=>{
+app.get("/room",middleware,(req,res)=>{
     res.send("hi there")
 })
 app.listen(3001)
