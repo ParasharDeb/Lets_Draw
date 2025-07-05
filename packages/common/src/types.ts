@@ -2,10 +2,10 @@ import z from "zod";
 export const Userschema=z.object({
     username:z.string().min(3).max(20),
     password:z.string(),
-    name:z.string()
+    email:z.string()
 })
-export const Singin=z.object({
-    username:z.string().min(3).max(20),
+export const SinginSchema=z.object({
+    email:z.string().min(3).max(20),
     password:z.string(),
 })
 export const Createroomschema=z.object({

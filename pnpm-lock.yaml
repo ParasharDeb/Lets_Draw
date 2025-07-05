@@ -26,6 +26,9 @@ importers:
       '@repo/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -130,19 +133,6 @@ importers:
         version: link:../typescript-config
 
   packages/db:
-    dependencies:
-      '@prisma/client':
-        specifier: 6.11.1
-        version: 6.11.1(prisma@6.11.1(typescript@5.8.2))(typescript@5.8.2)
-      prisma:
-        specifier: ^6.11.1
-        version: 6.11.1(typescript@5.8.2)
-    devDependencies:
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-
-  packages/db_2:
     dependencies:
       '@prisma/client':
         specifier: 6.11.1
