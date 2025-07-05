@@ -64,7 +64,7 @@ app.post("/signin",async(req,res)=>{
         token:token
     })
 })
-app.post("/room",middleware,(req,res)=>{
+app.post("/room",middleware,async(req,res)=>{
     const parseddata=Createroomschema.safeParse(req.body)
     if(!parseddata.success){
         console.log(parseddata.error)
@@ -75,14 +75,14 @@ app.post("/room",middleware,(req,res)=>{
     }
     //@ts-ignore
     const userId= req.userId
-    prismaclient.room.create({
+    const room = await prismaclient.room.create({
         data:{
         slug:parseddata.data.roomname,
         adminId:userId
         }
     })
     res.json({
-        message:"Room was created"
+        message:room.id
     })
 
 })
