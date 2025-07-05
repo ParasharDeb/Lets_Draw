@@ -55,23 +55,35 @@ app.post("/signin",async(req,res)=>{
         res.status(411).json({
             message:"Incorrect Credentials"
         })
- 
+        return
     }
     const token = jwt.sign({
-        user
+        userId:user?.id
     },JWT_SECRET)   
     res.json({
         token:token
     })
 })
-app.get("/room",middleware,(req,res)=>{
-    const data=Createroomschema.safeParse(req.body)
-    if(!data.success){
+app.post("/room",middleware,(req,res)=>{
+    const parseddata=Createroomschema.safeParse(req.body)
+    if(!parseddata.success){
+        console.log(parseddata.error)
         res.json({
             message:"Invalid Input"
         })
         return
     }
-    res.send("hi there")
+    //@ts-ignore
+    const userId= req.userId
+    prismaclient.room.create({
+        data:{
+        slug:parseddata.data.roomname,
+        adminId:userId
+        }
+    })
+    res.json({
+        message:"Room was created"
+    })
+
 })
 app.listen(3001)

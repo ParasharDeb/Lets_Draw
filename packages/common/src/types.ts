@@ -9,5 +9,5 @@ export const SinginSchema=z.object({
     password:z.string(),
 })
 export const Createroomschema=z.object({
-    name:z.string().min(3).max(20)
+    roomname:z.string().min(3).max(20),
 })
