@@ -4,6 +4,7 @@ import { JWT_SECRET } from "@repo/backend-common/config";
 
 const wss=new WebSocketServer({port:8080})
 function userAuthethtication(token:string): string | null {
+    try{
     const decoded=jwt.verify(token,JWT_SECRET)
     if(typeof(decoded)=="string"){
         return null
@@ -12,6 +13,10 @@ function userAuthethtication(token:string): string | null {
         return null;
     }
     return decoded.userId
+    }
+    catch(e){
+        return null
+    }
 }
 interface User{
     userId:string,
@@ -36,6 +41,7 @@ wss.on("connection",(ws,request)=>{
         ws:ws
     })
     ws.on("message",(data)=>{
+        try{
         const parseddata=JSON.parse(data as unknown as string)
         if(parseddata.type==="join_room"){
             const user=users.find(x=>x.ws===ws)
@@ -46,10 +52,9 @@ wss.on("connection",(ws,request)=>{
             if(!user){
                 return
             }
-            user.rooms=user.rooms.filter(x=>x===parseddata.roomId)
+            user.rooms=user.rooms.filter(x=>x===parseddata.room)
         }
         else if(parseddata.type==="chat"){
-            
             const user=users.find(x=>x.ws===ws)
             if(!user){
                 return
@@ -64,6 +69,11 @@ wss.on("connection",(ws,request)=>{
                 }
             })
         }
+        }
+        catch(e){
+            return 
+        }
+        
     })
     
 })
