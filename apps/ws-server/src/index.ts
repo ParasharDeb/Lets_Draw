@@ -41,12 +41,28 @@ wss.on("connection",(ws,request)=>{
             const user=users.find(x=>x.ws===ws)
             user?.rooms.push(parseddata.roomId)
         }
-        if(parseddata.type==="leave_room"){
+        else if(parseddata.type==="leave_room"){
             const user=users.find(x=>x.ws===ws)
             if(!user){
                 return
             }
-            user.rooms=user.rooms.filter(x=>x===parseddata.room)
+            user.rooms=user.rooms.filter(x=>x===parseddata.roomId)
+        }
+        else if(parseddata.type==="chat"){
+            
+            const user=users.find(x=>x.ws===ws)
+            if(!user){
+                return
+            }
+            users.forEach(user=>{
+                if(user.rooms.includes(parseddata.roomId)){
+                    user.ws.send(JSON.stringify({
+                        type:"chat",
+                        message:parseddata.message,
+                        roomId:parseddata.roomId
+                    }))
+                }
+            })
         }
     })
     
