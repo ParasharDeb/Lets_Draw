@@ -60,6 +60,9 @@ app.post("/signin",async(req,res)=>{
     const token = jwt.sign({
         user
     },JWT_SECRET)   
+    res.json({
+        token:token
+    })
 })
 app.get("/room",middleware,(req,res)=>{
     const data=Createroomschema.safeParse(req.body)

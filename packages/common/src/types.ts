@@ -5,7 +5,7 @@ export const Userschema=z.object({
     email:z.string()
 })
 export const SinginSchema=z.object({
-    email:z.string().min(3).max(20),
+    email:z.string().min(3).max(1000),
     password:z.string(),
 })
 export const Createroomschema=z.object({
