@@ -40,7 +40,7 @@ wss.on("connection",(ws,request)=>{
         rooms:[],
         ws:ws
     })
-    ws.on("message",(data)=>{
+    ws.on("message",async(data)=>{
         try{
         const parseddata=JSON.parse(data as unknown as string)
         if(parseddata.type==="join_room"){
@@ -61,7 +61,7 @@ wss.on("connection",(ws,request)=>{
             if(!user){
                 return
             }
-            prismaclient.chat.create({
+            await prismaclient.chat.create({
                 data:{
                     roomId,
                     message,
