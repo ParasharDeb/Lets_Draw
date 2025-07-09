@@ -1,7 +1,8 @@
-import Authentication from "../components/Authen";
-
-export default function Signup(){
+import Authentication from "../components/authen"
+export default function Signin(){
     return(
-        <Authentication issignedIn={true} />
+        <div>
+            <Authentication issignedIn={true}/>
+        </div>
     )
 }
