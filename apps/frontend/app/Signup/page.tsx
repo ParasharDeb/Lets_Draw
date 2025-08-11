@@ -3,10 +3,12 @@ import Button from "@/ui/button";
 import InputBox from "@/ui/input";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 export default function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const Router = useRouter();
     function handleSignup() {
         try{
             axios.post("/api/signup",{
@@ -14,6 +16,8 @@ export default function Signup() {
                 password: password,
                 email: email,
             }).then((response) => {
+                console.log(response.data);
+                Router.push("/signin");
                 if (response.status === 200) {
                     alert("Signup successful!");
                 } else {
