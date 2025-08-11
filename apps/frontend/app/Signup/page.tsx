@@ -2,13 +2,33 @@
 import Button from "@/ui/button";
 import InputBox from "@/ui/input";
 import { useState } from "react";
-
+import axios from "axios";
 export default function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     function handleSignup() {
-
+        try{
+            axios.post("/api/signup",{
+                username: username,
+                password: password,
+                email: email,
+            }).then((response) => {
+                if (response.status === 200) {
+                    alert("Signup successful!");
+                } else {
+                    alert("Signup failed: " + response.data.message);
+                }
+            }
+            ).catch((error) => {
+                console.error("Error during signup:", error);
+                alert("Signup failed. Please try again.");
+            });
+        }
+        catch (error) {
+            console.error("Signup failed:", error);
+            alert("Signup failed. Please try again.Database is down");
+        }
     }
     return(
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
